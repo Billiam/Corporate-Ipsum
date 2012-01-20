@@ -1,0 +1,18 @@
+{
+  "name": "Corporate Ipsum",
+  "version": "0.0.0.1",
+  "description": "Generate random corporate double-speak for use as filler text",
+  "browser_action": {
+    "default_title": "Corporate Ipsum",
+    "default_icon": "icon.png",
+    "default_popup": "popup.html"
+  },
+  "icons": {
+    "48": "icon48.png",
+    "64": "icon64.png",
+    "128": "icon128.png"
+  },
+  "permissions" :[
+    "contextMenus"
+  ]
+}
