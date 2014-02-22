@@ -1,6 +1,6 @@
 {
   "name": "Corporate Ipsum",
-  "version": "0.0.0.1",
+  "version": "0.0.1",
   "description": "Generate random corporate double-speak for use as filler text",
   "browser_action": {
     "default_title": "Corporate Ipsum",
