@@ -66,73 +66,7 @@
     <script src="js/utils.js"></script>
     <script src="js/settings.js"></script>
     <script src="js/textGenerator.js"></script>
-    
-    <script>
-    
-    var corporate = {
-        nodes       : {},
-        generator   : new TextGenerator(new IpsumFactory()),
-        settings    : new Settings()
-    };
-    
-    function populateForm() {
-        var count = corporate.settings.getCount();
-        getNode('count').value = count;
-        getNode('count-display').textContent = count;
-        getNode('type').value = corporate.settings.getType();
-    }
-    function copyContent() {
-        var node = getNode('outputtext');
-        node.focus();
-        node.select();
-        document.execCommand('Copy');
-    }
-    function getNode(id) {
-        if (typeof(corporate.nodes[id]) !== "undefined") {
-            return corporate.nodes[id];
-        }
-        return document.getElementById(id);
-    }
-    
-    function formChanged(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        
-        //update settings
-        var value = e.target.value;
-        var id = e.target.id;
-        if (id == 'count') {
-            getNode('count-display').textContent = value;
-        }
-        
-        corporate.settings['set' + id.ucFirst()](value);
-        runGenerator();
-    }
-    function runGenerator() {
-        corporate.generator.setType(corporate.settings.getType())
-                           .setCount(corporate.settings.getCount());
-
-        getNode('outputtext').value = corporate.generator.generateString();
-    }
-    
-    window.onload = function() {
-        if( ! corporate.settings.getCount()) {
-            corporate.settings.setCount(25);
-        }
-        populateForm();
-        runGenerator();
-        
-        var fields = ['count', 'type'];
-        
-        for (var i=0, l=fields.length; i<l; i++) {
-            getNode(fields[i]).addEventListener('change', formChanged);
-        }
-
-        document.forms.loremform.addEventListener('submit', runGenerator);
-
-        getNode('copy').addEventListener('click', copyContent);
-    }
-    </script>
+    <script src="js/app.js"></script>
 </head>
     
 <body>
@@ -140,7 +74,7 @@
         <input type="range" id="count" min="1" max="500" />
         <span id="count-display"></span>
         <select id="type" name="type">
-            <option value="words">Words</option>
+            <option value="words" selected="selected">Words</option>
             <option value="paragraphs">Paragraphs</option>
         </select>
         <textarea spellcheck="false" id="outputtext"></textarea>
