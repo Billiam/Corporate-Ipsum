@@ -1,62 +1,69 @@
 
-var corporate = {
+const Corporate = {
     nodes       : {},
     generator   : new TextGenerator(new IpsumFactory()),
     settings    : new Settings()
-};
-
-function populateForm() {
-    var count = corporate.settings.getCount();
-
-    getNode('count').value = count;
-    getNode('count-display').textContent = count;
-    getNode('type').value = corporate.settings.getType();
 }
-function copyContent() {
-    var node = getNode('outputtext');
-    node.focus();
-    node.select();
-    document.execCommand('Copy');
+
+const COUNT_FIELD = 'count'
+const COUNT_DISPLAY = 'count-display'
+const TYPE_FIELD = 'type'
+const OUTPUT_FIELD = 'outputtext'
+const COPY_FIELD = 'copy'
+
+const populateForm = () => {
+    const count = Corporate.settings.getCount()
+
+    getNode(COUNT_FIELD).value = count
+    getNode(COUNT_DISPLAY).textContent = count
+    getNode(TYPE_FIELD).value = Corporate.settings.getType()
 }
-function getNode(id) {
-    if (typeof(corporate.nodes[id]) !== "undefined") {
-        return corporate.nodes[id];
+const copyContent = () => {
+    const node = getNode(OUTPUT_FIELD)
+    node.focus()
+    node.select()
+    navigator.clipboard.writeText(node.getValue)
+}
+const getNode = (id) => {
+    if (Corporate.nodes[id] == null) {
+        Corporate.nodes[id] = document.getElementById(id)
     }
-    return document.getElementById(id);
+    return Corporate.nodes[id]
 }
 
-function formChanged(e) {
-    e.preventDefault();
-    e.stopPropagation();
+const formChanged = (e) => {
+    e.preventDefault()
+    e.stopPropagation()
     
     //update settings
-    var value = e.target.value;
-    var id = e.target.id;
-    if (id == 'count') {
-        getNode('count-display').textContent = value;
-    }
-    
-    corporate.settings['set' + id.ucFirst()](value);
-    runGenerator();
-}
-function runGenerator() {
-    corporate.generator.setType(corporate.settings.getType())
-                       .setCount(corporate.settings.getCount());
+    ;([COUNT_FIELD, TYPE_FIELD]).forEach(id => {
+        const node = getNode(id)
+        const value = node.value
+        if (id === COUNT_FIELD) {
+            getNode(COUNT_DISPLAY).textContent = value
+        }
+        Corporate.settings[`set${id.ucFirst()}`](value)
+    })
 
-    getNode('outputtext').value = corporate.generator.generateString();
+    runGenerator()
+}
+
+function runGenerator() {
+    Corporate.generator.setType(Corporate.settings.getType())
+                       .setCount(Corporate.settings.getCount())
+
+    getNode(OUTPUT_FIELD).value = Corporate.generator.generateString()
 }
 
 window.onload = function() {
-    populateForm();
-    runGenerator();
+    populateForm()
+    runGenerator()
     
-    var fields = ['count', 'type'];
-    
-    for (var i=0, l=fields.length; i<l; i++) {
-        getNode(fields[i]).addEventListener('change', formChanged);
-    }
+    ;(['count', 'type']).forEach(id => {
+        getNode(id).addEventListener('change', formChanged)
+    })
 
-    document.forms.loremform.addEventListener('submit', runGenerator);
+    document.forms.loremform.addEventListener('submit', runGenerator)
 
-    getNode('copy').addEventListener('click', copyContent);
+    getNode(COPY_FIELD).addEventListener('click', copyContent)
 }
