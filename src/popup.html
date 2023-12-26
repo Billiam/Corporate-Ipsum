@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<head>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        body {
+            font: menu;
+            font-size: 12px;
+            text-shadow: 0px 1px #fff;
+            background-color: #f3f3f3;
+            width: 310px;
+            padding: 15px;
+            color: #777;
+        }
+
+        select {
+            cursor: pointer;
+            appearance: none;
+            padding: 6px;
+            font-size: 11px;
+            color: #888;
+            border-radius: 10px;
+            background-color: #fcfcfc;
+            border: 0;
+            border-top: 1px solid #ddd;
+        }
+
+        select:focus {
+            outline: none;
+        }
+
+        input[type=range] {
+            width: 300px;
+            margin-bottom: 10px;
+            display: block;
+            accent-color: #888;
+        }
+
+        button {
+            border: 1px solid #888;
+            border-radius: 3px;
+            padding: 5px 12px;
+            color: #666;
+            background: linear-gradient(180deg, #fff 0, whiteSmoke 40%, #ebebeb 41%);
+        }
+
+        textarea {
+            resize: vertical;
+            max-height: 450px;
+            font: menu;
+            cursor: auto;
+
+            background-color: #fafafa;
+            color: #888;
+            margin: 10px 0;
+            padding: 6px;
+            font-size: 12px;
+            height: 100px;
+            min-height: 30px;
+            width: 300px;
+            display: block;
+        }
+        textarea:focus-visible {
+            outline: none;
+            box-shadow: 0 0 4px #5083b3;
+        }
+
+        ::-webkit-scrollbar {
+            width: 12px;
+            cursor: pointer;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+            cursor: pointer;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            border-radius: 6px;
+            background-color: #aaa;
+            cursor: default;
+        }
+        ::-webkit-resizer {
+            border-color: #fafafa #ccc #ccc #fafafa;
+            border-width: 8px;
+            border-style: solid;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            body {
+                background-color: #1a1a1a;
+                color: #ddd;
+                text-shadow: 0 1px #111;
+            }
+
+            select {
+                color: #ddd;
+                background-color: #111;
+                border-bottom: 1px solid #444;
+                border-top: none;
+            }
+
+            button {
+                cursor: pointer;
+                background: linear-gradient(180deg, #222 0, #333 40%, #222 41%);
+                border-color: #666;
+                color: #ddd;
+            }
+
+            input[type=range] {
+                accent-color: #aaa;
+                background: red;
+            }
+
+            textarea {
+                background-color: #111;
+                color: #eee;
+                border-color: #666;
+                transition: box-shadow 200ms;
+                border-radius: 3px;
+            }
+
+            textarea:focus-visible {
+                outline: none;
+                box-shadow: 0 0 4px #b5dbff;
+            }
+
+            ::-webkit-scrollbar-thumb {
+                background-color: #888;
+            }
+
+            ::-webkit-resizer {
+                border-color: #111 #999 #999 #111;
+            }
+        }
+    </style>
+    <script src="js/utils.js"></script>
+    <script src="js/settings.js"></script>
+    <script src="js/textGenerator.js"></script>
+    <script src="js/app.js"></script>
+</head>
+<body>
+<form name="loremform">
+    <input type="range" id="count" min="1" max="500"/>
+    <span id="count-display"></span>
+    <select id="type" name="type">
+        <option value="words" selected="selected">Words</option>
+        <option value="paragraphs">Paragraphs</option>
+    </select>
+    <textarea spellcheck="false" id="outputtext"></textarea>
+    <button id="copy">Copy to clipboard</button>
+</form>
+</body>
+</html>
